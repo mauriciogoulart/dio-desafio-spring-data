@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -34,6 +35,7 @@ public class Aluno {
 	private String cpf;
 	private String bairro;
 	private LocalDate dataNascimento;
+	@JsonIgnore
 	@OneToMany(mappedBy = "aluno", fetch = FetchType.LAZY)
 	private List<AvaliacaoFisica> avaliacoes;
 	
