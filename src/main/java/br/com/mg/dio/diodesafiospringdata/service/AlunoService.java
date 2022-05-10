@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.mg.dio.diodesafiospringdata.dto.AlunoDTO;
 import br.com.mg.dio.diodesafiospringdata.entity.Aluno;
-import br.com.mg.dio.diodesafiospringdata.exception.AlunoNotFoundException;
+import br.com.mg.dio.diodesafiospringdata.exception.RegistroNotFoundException;
 import br.com.mg.dio.diodesafiospringdata.mapper.AlunoMapper;
 import br.com.mg.dio.diodesafiospringdata.repository.AlunoRepository;
 
@@ -27,7 +27,7 @@ public class AlunoService {
 		return alunoMapper.toDTO(aluno);
 	}
 
-	public void delete(Long id) throws AlunoNotFoundException {
+	public void delete(Long id) throws RegistroNotFoundException {
 		Aluno aluno = findAlunoById(id);
 		repository.delete(aluno);
 	}
@@ -38,16 +38,16 @@ public class AlunoService {
 		return alunosDTO;
 	}
 
-	public AlunoDTO findById(Long id) throws AlunoNotFoundException {
+	public AlunoDTO findById(Long id) throws RegistroNotFoundException {
 		Aluno aluno = findAlunoById(id);
 		return alunoMapper.toDTO(aluno);
 	}
 
-	private Aluno findAlunoById(Long id) throws AlunoNotFoundException {
-		return repository.findById(id).orElseThrow(() -> new AlunoNotFoundException(id));
+	public Aluno findAlunoById(Long id) throws RegistroNotFoundException {
+		return repository.findById(id).orElseThrow(() -> new RegistroNotFoundException(id));
 	}
 
-	public AlunoDTO update(Long id, AlunoDTO alunoDTO) throws AlunoNotFoundException {
+	public AlunoDTO update(Long id, AlunoDTO alunoDTO) throws RegistroNotFoundException {
 		Aluno alunoPersistente = findAlunoById(id);
 		Aluno alunoSalvar = alunoMapper.toModel(alunoDTO);
 		alunoSalvar.setId(id);

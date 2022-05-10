@@ -4,12 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.NOT_FOUND)
-public class AlunoNotFoundException extends Exception {
+public class RegistroNotFoundException extends Exception {
 
 	private static final long serialVersionUID = -220950167702121713L;
 
-	public AlunoNotFoundException(Long id) {
-		super("Aluno com id " + id + " nao encontrado");
+	public RegistroNotFoundException(Long id) {
+		super("Registro com id " + id + " nao encontrado");
 	}
 
 }

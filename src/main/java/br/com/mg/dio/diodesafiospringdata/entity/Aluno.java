@@ -3,6 +3,7 @@ package br.com.mg.dio.diodesafiospringdata.entity;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,7 +37,7 @@ public class Aluno {
 	private String bairro;
 	private LocalDate dataNascimento;
 	@JsonIgnore
-	@OneToMany(mappedBy = "aluno", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "aluno", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	private List<AvaliacaoFisica> avaliacoes;
 	
 	
