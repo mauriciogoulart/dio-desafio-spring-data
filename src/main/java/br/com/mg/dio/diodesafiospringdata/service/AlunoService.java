@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.mg.dio.diodesafiospringdata.dto.AlunoDTO;
+import br.com.mg.dio.diodesafiospringdata.dto.AvaliacaoFisicaDTO;
 import br.com.mg.dio.diodesafiospringdata.entity.Aluno;
 import br.com.mg.dio.diodesafiospringdata.exception.RegistroNotFoundException;
 import br.com.mg.dio.diodesafiospringdata.mapper.AlunoMapper;
+import br.com.mg.dio.diodesafiospringdata.mapper.AvaliacaoFisicaMapper;
 import br.com.mg.dio.diodesafiospringdata.repository.AlunoRepository;
 
 @Service
@@ -20,6 +22,8 @@ public class AlunoService {
 	private AlunoRepository repository;
 
 	private final AlunoMapper alunoMapper = AlunoMapper.INSTANCE;
+
+	private final AvaliacaoFisicaMapper avaliacaoFisicaMapper = AvaliacaoFisicaMapper.INSTANCE;
 
 	public AlunoDTO create(AlunoDTO alunoDTO) {
 		Aluno aluno = alunoMapper.toModel(alunoDTO);
@@ -54,6 +58,11 @@ public class AlunoService {
 		BeanUtils.copyProperties(alunoSalvar, alunoPersistente);
 		Aluno alunoAtualizado = repository.save(alunoPersistente);
 		return alunoMapper.toDTO(alunoAtualizado);
+	}
+
+	public List<AvaliacaoFisicaDTO> findAllAvaliacoes(Long id) throws RegistroNotFoundException {
+		return findAlunoById(id).getAvaliacoes().stream().map(avaliacao -> avaliacaoFisicaMapper.toDTO(avaliacao))
+				.collect(Collectors.toList());
 	}
 
 }

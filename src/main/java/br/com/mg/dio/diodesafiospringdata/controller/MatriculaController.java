@@ -16,23 +16,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.mg.dio.diodesafiospringdata.dto.AlunoDTO;
-import br.com.mg.dio.diodesafiospringdata.dto.AvaliacaoFisicaDTO;
+import br.com.mg.dio.diodesafiospringdata.dto.MatriculaDTO;
 import br.com.mg.dio.diodesafiospringdata.exception.RegistroNotFoundException;
-import br.com.mg.dio.diodesafiospringdata.service.AlunoService;
+import br.com.mg.dio.diodesafiospringdata.service.MatriculaService;
 
 @RestController
-@RequestMapping("api/v1/alunos")
-public class AlunoController {
-
-	@Autowired
-	private AlunoService service;
+@RequestMapping("api/v1/matriculas")
+public class MatriculaController {
 	
+	@Autowired
+	private MatriculaService service;
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AlunoDTO> create(@RequestBody AlunoDTO alunoDTO) {
-		AlunoDTO alunoPersistente = service.create(alunoDTO);
-		return ResponseEntity.status(HttpStatus.CREATED).body(alunoPersistente);
+	public ResponseEntity<MatriculaDTO> create(@RequestBody MatriculaDTO matriculaDTO) throws RegistroNotFoundException {
+		MatriculaDTO matriculaPersistente = service.create(matriculaDTO);
+		return ResponseEntity.status(HttpStatus.CREATED).body(matriculaPersistente);
 	}
 
 	@ResponseStatus(HttpStatus.NO_CONTENT)
@@ -42,28 +40,22 @@ public class AlunoController {
 	}
 
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<AlunoDTO>> findAll() {
-		List<AlunoDTO> alunos = service.findAll();
-		return ResponseEntity.ok(alunos);
-	}
-	
-	@GetMapping(path = "/avaliacoes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<AvaliacaoFisicaDTO>> findAllAvaliacoes(@PathVariable("id") Long id) throws RegistroNotFoundException {
-		List<AvaliacaoFisicaDTO> avaliacoes = service.findAllAvaliacoes(id);
-		return ResponseEntity.ok(avaliacoes);
+	public ResponseEntity<List<MatriculaDTO>> findAll() {
+		List<MatriculaDTO> matriculas = service.findAll();
+		return ResponseEntity.ok(matriculas);
 	}
 
 	@GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AlunoDTO> findById(@PathVariable("id") Long id) throws RegistroNotFoundException {
-		AlunoDTO aluno = service.findById(id);
-		return ResponseEntity.ok(aluno);
+	public ResponseEntity<MatriculaDTO> findById(@PathVariable("id") Long id) throws RegistroNotFoundException {
+		MatriculaDTO matricula = service.findById(id);
+		return ResponseEntity.ok(matricula);
 	}
 
 	@PutMapping(path = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<AlunoDTO> update(@PathVariable("id") Long id, @RequestBody AlunoDTO alunoDTO)
+	public ResponseEntity<MatriculaDTO> update(@PathVariable("id") Long id, @RequestBody MatriculaDTO matriculaDTO)
 			throws RegistroNotFoundException {
-		AlunoDTO aluno = service.update(id, alunoDTO);
-		return ResponseEntity.ok(aluno);
+		MatriculaDTO matricula = service.update(id, matriculaDTO);
+		return ResponseEntity.ok(matricula);
 	}
 
 }
